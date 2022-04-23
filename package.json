@@ -1,0 +1,11 @@
+{
+	"name": "string-parser",
+	"version": "1.0.0",
+	"author": "Rio <riostockton@gmail.com>",
+	"description": "A program that interpolates object data into placeholders within a string of text",
+	"main": "index.js",
+	"license": "MIT",
+	"devDependencies": {
+		"jest": "^27.5.1"
+	}
+}
