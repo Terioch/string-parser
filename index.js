@@ -12,10 +12,9 @@ function insertDataIntoTextPlaceholders(text, data) {
 			const placeholderKeys = text
 				.substring(i + 3, placeholderEnd - 2)
 				.split(".");
-			const dataValue =
-				data[placeholderKeys[0]][placeholderKeys[1]] || "<nothing>";
-			console.log(dataValue);
-			newText += dataValue;
+			let dataValue = data;
+			placeholderKeys.map((key) => (dataValue = dataValue[key]));
+			newText += dataValue || "<nothing>";
 			i = placeholderEnd; // Set current position to end of placeholder
 		} else {
 			newText += textChars[i];
