@@ -8,6 +8,14 @@ function insertDataIntoTextPlaceholders(text, data) {
 			while (textChars[j] !== "}") j++;
 			j++;
 			console.log(textChars[j]);
+
+			const placeholder = text.substring(i, j + 1);
+			const placeholderKeys = text.substring(i + 3, j - 2).split(".");
+			console.log(placeholder);
+			console.log(placeholderKeys);
+			const value = data[placeholderKeys[0]][placeholderKeys[1]] || "<nothing>";
+			console.log(value);
+			text = text.replace(placeholder, value);
 		}
 	}
 	return text;
