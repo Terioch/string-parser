@@ -5,6 +5,9 @@
 	"description": "A program that interpolates object data into placeholders within a string of text",
 	"main": "index.js",
 	"license": "MIT",
+	"scripts": {
+		"test": "jest"
+	},
 	"devDependencies": {
 		"jest": "^27.5.1"
 	}
