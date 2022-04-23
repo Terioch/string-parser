@@ -3,24 +3,37 @@ function insertDataIntoTextPlaceholders(text, data) {
 	let newText = "";
 
 	for (let i = 0; i < textChars.length; ++i) {
-		if (textChars[i] === "{" && textChars[i + 1] === "{") {
-			// Find end of placeholder
-			let placeholderEnd = i + 2;
-			while (textChars[placeholderEnd] !== "}") placeholderEnd++;
-			placeholderEnd++;
-
+		if (isStartOfPlaceholder(i, textChars)) {
+			let placeholderEndIdx = getEndOfPlaceholder(i, textChars);
+			// Get object value for placeholder keys and append to new text
 			const placeholderKeys = text
-				.substring(i + 3, placeholderEnd - 2)
+				.substring(i + 3, placeholderEndIdx - 2)
 				.split(".");
-			let dataValue = data;
-			placeholderKeys.map((key) => (dataValue = dataValue[key]));
-			newText += dataValue || "<nothing>";
-			i = placeholderEnd; // Set current position to end of placeholder
+			const dataValue = getDataValueForPlaceholderKeys(placeholderKeys, data);
+			newText += dataValue;
+			i = placeholderEndIdx;
 		} else {
 			newText += textChars[i];
 		}
 	}
 	return newText;
+}
+
+function isStartOfPlaceholder(idx, textChars) {
+	return textChars[idx] === "{" && textChars[idx + 1] === "{";
+}
+
+function getEndOfPlaceholder(start, textChars) {
+	let end = start + 2;
+	while (textChars[end] !== "}") end++;
+	end++;
+	return end;
+}
+
+function getDataValueForPlaceholderKeys(placeholderKeys, data) {
+	let dataValue = data;
+	placeholderKeys.map((key) => (dataValue = dataValue[key]));
+	return dataValue || "<nothing>";
 }
 
 module.exports = {
